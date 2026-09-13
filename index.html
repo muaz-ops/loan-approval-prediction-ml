@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Approval Prediction</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+
+<header class="app-header">
+    <div class="container">
+        <div class="brand">
+            <span class="brand-mark">LA</span>
+            <div>
+                <div class="brand-title">Loan Approval Prediction</div>
+                <div class="brand-sub">Logistic Regression risk model</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container app-main">
+    <div class="row g-4">
+
+        <div class="col-lg-7">
+            <form method="POST" action="/predict" class="app-card p-4 p-md-5">
+                <div class="form-note mb-4">
+                    Figures below follow the dataset's original scale — check the hint next to each field (e.g. loan amount is in thousands, not the full number).
+                </div>
+
+                {% if errors %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please fix the following before continuing:</strong>
+                    <ul class="mb-0 mt-2">
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <section class="form-section">
+                    <h2 class="section-title">Applicant details</h2>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label">Gender</label>
+                            <select name="gender" class="form-select">
+                                <option value="" disabled {% if not form.gender %}selected{% endif %}>Select</option>
+                                <option value="Male" {% if form.gender=='Male' %}selected{% endif %}>Male</option>
+                                <option value="Female" {% if form.gender=='Female' %}selected{% endif %}>Female</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Marital status</label>
+                            <select name="married" class="form-select">
+                                <option value="" disabled {% if not form.married %}selected{% endif %}>Select</option>
+                                <option value="Yes" {% if form.married=='Yes' %}selected{% endif %}>Married</option>
+                                <option value="No" {% if form.married=='No' %}selected{% endif %}>Unmarried</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Dependents</label>
+                            <select name="dependents" class="form-select">
+                                <option value="" disabled {% if not form.dependents %}selected{% endif %}>Select</option>
+                                <option value="0" {% if form.dependents=='0' %}selected{% endif %}>0</option>
+                                <option value="1" {% if form.dependents=='1' %}selected{% endif %}>1</option>
+                                <option value="2" {% if form.dependents=='2' %}selected{% endif %}>2</option>
+                                <option value="3" {% if form.dependents=='3' %}selected{% endif %}>3 or more</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Education</label>
+                            <select name="education" class="form-select">
+                                <option value="" disabled {% if not form.education %}selected{% endif %}>Select</option>
+                                <option value="Graduate" {% if form.education=='Graduate' %}selected{% endif %}>Graduate</option>
+                                <option value="Not Graduate" {% if form.education=='Not Graduate' %}selected{% endif %}>Not Graduate</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Self-employed</label>
+                            <select name="self_employed" class="form-select">
+                                <option value="" disabled {% if not form.self_employed %}selected{% endif %}>Select</option>
+                                <option value="Yes" {% if form.self_employed=='Yes' %}selected{% endif %}>Yes</option>
+                                <option value="No" {% if form.self_employed=='No' %}selected{% endif %}>No</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Property area</label>
+                            <select name="property_area" class="form-select">
+                                <option value="" disabled {% if not form.property_area %}selected{% endif %}>Select</option>
+                                <option value="Urban" {% if form.property_area=='Urban' %}selected{% endif %}>Urban</option>
+                                <option value="Semiurban" {% if form.property_area=='Semiurban' %}selected{% endif %}>Semiurban</option>
+                                <option value="Rural" {% if form.property_area=='Rural' %}selected{% endif %}>Rural</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="section-divider">
+
+                <section class="form-section">
+                    <h2 class="section-title">Financial details</h2>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label">Applicant income <span class="unit">— whole amount, e.g. 5000</span></label>
+                            <input type="number" name="applicant_income" class="form-control" placeholder="e.g. 5000" value="{{ form.applicant_income }}">
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Coapplicant income <span class="unit">— whole amount, e.g. 0</span></label>
+                            <input type="number" name="coapplicant_income" class="form-control" placeholder="e.g. 0" value="{{ form.coapplicant_income }}">
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Credit history</label>
+                            <select name="credit_history" class="form-select">
+                                <option value="" disabled {% if not form.credit_history %}selected{% endif %}>Select</option>
+                                <option value="Good" {% if form.credit_history=='Good' %}selected{% endif %}>Good — no past defaults</option>
+                                <option value="Poor" {% if form.credit_history=='Poor' %}selected{% endif %}>Poor — past defaults</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="section-divider">
+
+                <section class="form-section">
+                    <h2 class="section-title">Loan details</h2>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label">Loan amount <span class="unit">— in thousands, e.g. 500 = 500,000</span></label>
+                            <input type="number" name="loan_amount" class="form-control" placeholder="e.g. 120" value="{{ form.loan_amount }}">
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Loan term <span class="unit">/ days</span></label>
+                            <input type="number" name="loan_term" class="form-control" placeholder="e.g. 360" value="{{ form.loan_term }}">
+                        </div>
+                    </div>
+                </section>
+
+                <button type="submit" class="btn btn-predict w-100 mt-4">Check approval</button>
+            </form>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="app-card result-card p-4 p-md-5">
+                {% if result %}
+                    <div class="verdict {{ 'verdict-approved' if result.approved else 'verdict-rejected' }}">
+                        {{ result.label }}
+                    </div>
+
+                    <div class="prob-row">
+                        <span>Approval probability</span>
+                        <span class="prob-value">{{ result.prob_approved }}%</span>
+                    </div>
+                    <div class="prob-bar">
+                        <div class="prob-fill" style="width: {{ result.prob_approved }}%;"></div>
+                    </div>
+
+                    <div class="prob-row mt-3">
+                        <span>Rejection probability</span>
+                        <span class="prob-value">{{ result.prob_rejected }}%</span>
+                    </div>
+
+                    <div class="suggestion-box mt-4">
+                        <div class="suggestion-label">What this means</div>
+                        <p class="mb-0">{{ result.suggestion }}</p>
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-icon">LA</div>
+                        <p>Fill in the applicant's details and submit the form to see the predicted outcome and approval probability.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="app-card note-card p-4 mt-4">
+                <div class="section-title small">About this model</div>
+                <p class="mb-0 small-text">
+                    Trained with Logistic Regression on historical loan records.
+                    Credit history is the strongest factor in the outcome, followed by
+                    income relative to the requested loan amount.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="app-footer">
+    <div class="container">
+        <span>Loan Approval Prediction — AI Internship Project</span>
+    </div>
+</footer>
+
+</body>
+</html>

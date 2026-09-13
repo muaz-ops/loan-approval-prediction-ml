@@ -1,0 +1,258 @@
+:root {
+    --navy: #10233f;
+    --navy-light: #17335c;
+    --teal: #2a9d8f;
+    --teal-dark: #218074;
+    --gold: #c89b3c;
+    --rose: #b3395a;
+    --paper: #f5f6f8;
+    --ink: #1c2530;
+    --ink-soft: #5b6675;
+    --border: #e1e4ea;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+h1, h2, h3, .brand-title {
+    font-family: 'Source Serif 4', serif;
+}
+
+.app-header {
+    background: var(--navy);
+    padding: 22px 0;
+    border-bottom: 3px solid var(--teal);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: var(--teal);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.brand-title {
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.brand-sub {
+    color: #a9b7cc;
+    font-size: 13px;
+}
+
+.app-main {
+    padding-top: 40px;
+    padding-bottom: 50px;
+}
+
+.app-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.form-note {
+    background: var(--paper);
+    border-left: 3px solid var(--teal);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--ink-soft);
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 16px;
+}
+
+.section-title.small {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.section-divider {
+    margin: 28px 0;
+    border-color: var(--border);
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+}
+
+.unit {
+    font-weight: 400;
+    color: #9aa3b0;
+}
+
+.form-select, .form-control {
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 12px;
+    font-size: 14px;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+}
+
+.btn-predict {
+    background: var(--teal);
+    color: white;
+    border: none;
+    padding: 13px;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 7px;
+    transition: background 0.15s ease;
+}
+
+.btn-predict:hover {
+    background: var(--teal-dark);
+    color: white;
+}
+
+.result-card {
+    min-height: 240px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px 10px;
+    color: var(--ink-soft);
+}
+
+.empty-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    color: var(--navy);
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px auto;
+}
+
+.verdict {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 22px;
+}
+
+.verdict-approved {
+    background: rgba(42, 157, 143, 0.12);
+    color: var(--teal-dark);
+}
+
+.verdict-rejected {
+    background: rgba(179, 57, 90, 0.1);
+    color: var(--rose);
+}
+
+.prob-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+}
+
+.prob-value {
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.prob-bar {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+}
+
+.prob-fill {
+    background: var(--teal);
+    height: 100%;
+    border-radius: 20px;
+}
+
+.suggestion-box {
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.suggestion-label {
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.note-card {
+    background: var(--navy-light);
+    border: none;
+}
+
+.note-card .section-title {
+    color: white;
+}
+
+.small-text {
+    color: #c3cde0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.app-footer {
+    padding: 20px 0;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 991px) {
+    .app-main {
+        padding-top: 24px;
+    }
+}
